@@ -1,0 +1,21 @@
+﻿                   seed  rmse_log  picp90  prior_evals  full_evals  ms_per_step
+adaptive_compute                                                               
+False             101.0    0.0749  0.9840      35700.0     36000.0       3.1447
+True              101.0    0.0749  0.9839      11744.0     36000.0       1.5734
+
+state share per true condition:
+ state         OOD  SENSOR_FAULT  TRUSTED  UNCERTAIN
+fault_kind                                         
+clean       0.153         0.008    0.811      0.027
+drift       0.001         0.000    0.999      0.000
+noise       0.128         0.411    0.308      0.153
+spike       0.000         0.980    0.020      0.000
+stuck       0.022         0.933    0.044      0.000
+
+coverage by state:
+               samples  coverage90  mean_p_ood
+state                                        
+OOD              2412       0.997       0.854
+SENSOR_FAULT      730       1.000       0.627
+TRUSTED         17981       0.981       0.114
+UNCERTAIN         477       1.000       0.191

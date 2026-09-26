@@ -1,0 +1,5 @@
+﻿target: next-step dlogC  std 0.0002  lag-1 autocorr of y 0.526
+mlp skill -12.8623 REJECTED
+lstm skill vs persistence 0.616  pred std 0.000175  target std 0.00022
+tcn skill vs persistence 0.6293  pred std 0.000177  target std 0.00022
+transformer skill vs persistence 0.6043  pred std 0.000176  target std 0.00022

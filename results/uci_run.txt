@@ -1,0 +1,36 @@
+﻿rows 8991  calibration 698  train/val 715  test 7578  (2004-05-09 .. 2005-04-04)
+field calibration: b = -3.215, resid sd = 0.209 (log), n = 630
+  q_c=  0.6  validation rmse_log=0.564
+  q_c=  1.5  validation rmse_log=0.488
+  q_c=  3.0  validation rmse_log=0.471
+  q_c=  6.0  validation rmse_log=0.466
+  q_c= 12.0  validation rmse_log=0.465
+chosen q_c = 12.0 (validation)
+LSTM prior admission (1-step skill vs persistence) = 0.042 -> passed
+fused-level admission: val rmse with prior 0.680 vs without 0.574 -> prior REJECTED (disabled)
+sigma_sys = 0.351, conformal q = 1.83
+                      rmse_log  bias_log  mae_mg_m3      r2  picp90  width_log
+mode                                                                          
+raw                     0.4753   -0.0282     0.5820  0.6922  0.9198     1.5461
+ds_phys                 0.5297   -0.0002     0.6992  0.5830  0.8870     1.4705
+refit_phys              0.5445   -0.1087     0.7483  0.5089  0.8597     1.4719
+prior                   1.2561   -1.0111     1.5414 -1.0809  1.0000   109.1996
+fixed                   0.5059   -0.0847     0.6779  0.6019  0.8905     1.4088
+adaptive                0.4933   -0.0721     0.6540  0.6240  0.9076     1.4434
+static_formula_noTRH    0.4477   -0.1855     0.6159  0.6499     NaN        NaN
+static_formula_TRH      0.5471   -0.2948     0.7685  0.4852     NaN        NaN
+mode     adaptive  fixed  refit_phys
+month                               
+2004-05     0.582  0.583       0.597
+2004-06     0.556  0.596       0.652
+2004-07     0.536  0.569       0.612
+2004-08     0.447  0.480       0.519
+2004-09     0.466  0.490       0.553
+2004-10     0.394  0.407       0.553
+2004-11     0.535  0.538       0.588
+2004-12     0.438  0.437       0.450
+2005-01     0.541  0.540       0.557
+2005-02     0.351  0.350       0.365
+2005-03     0.507  0.505       0.510
+2005-04     0.401  0.399       0.397
+fault detection on real data (test period): {'det_precision': np.float64(0.09), 'det_recall': np.float64(0.32), 'det_f1': np.float64(0.14), 'det_latency_s': np.float64(4.783), 'events_missed': 9}

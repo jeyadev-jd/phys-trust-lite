@@ -1,0 +1,49 @@
+﻿thr new 0.3 old 0.3
+ seed       kind  start       true  lat_new  lat_old attributed
+  100      spike   1200     sensor      2.0      1.0       both
+  100      noise   1800     sensor      NaN      NaN       both
+  100      stuck   3240     sensor      5.0      4.0       both
+  100      spike   3800     sensor      2.0      1.0       both
+  100 T/RH swing   2600 cross-sens      NaN      NaN       none
+  101      spike   1200     sensor      2.0      1.0       both
+  101      noise   1800     sensor      NaN      NaN       both
+  101      stuck   3240     sensor      5.0      4.0       both
+  101      spike   3800     sensor      2.0      1.0       both
+  101 T/RH swing   2600 cross-sens      NaN      NaN       none
+  102      spike   1200     sensor      2.0      1.0       both
+  102      noise   1800     sensor     42.0     41.0       both
+  102      stuck   3240     sensor      5.0      4.0       both
+  102      spike   3800     sensor      2.0      1.0       both
+  102 T/RH swing   2600 cross-sens      NaN      NaN       none
+  103      spike   1200     sensor      2.0      1.0       both
+  103      noise   1800     sensor      NaN      NaN       both
+  103      stuck   3240     sensor      5.0      4.0       both
+  103      spike   3800     sensor      2.0      1.0       both
+  103 T/RH swing   2600 cross-sens      NaN      NaN       none
+  104      spike   1200     sensor      2.0      1.0       both
+  104      noise   1800     sensor      NaN      NaN       both
+  104      stuck   3240     sensor      5.0      4.0       both
+  104      spike   3800     sensor      2.0      1.0       both
+  104 T/RH swing   2600 cross-sens      NaN      NaN  phys-only
+ seed  new_P  new_R  new_F1  old_P  old_R  old_F1
+  100  0.839  0.707   0.767  0.946  0.686   0.795
+  101  0.794  0.729   0.760  0.933  0.743   0.827
+  102  0.758  0.739   0.749  0.874  0.721   0.791
+  103  0.761  0.739   0.750  0.890  0.754   0.816
+  104  0.767  0.729   0.747  0.656  0.743   0.697
+      new_P  new_R  new_F1  old_P  old_R  old_F1
+mean  0.784  0.729   0.755  0.860  0.729   0.785
+std   0.034  0.013   0.009  0.118  0.027   0.052
+latency by kind (mean):
+      lat_new      lat_old     
+         mean  std    mean  std
+kind                           
+noise    42.0  NaN    41.0  NaN
+spike     2.0  0.0     1.0  0.0
+stuck     5.0  0.0     4.0  0.0
+confusion (rows true, cols attributed):
+attributed  both  none  phys-only
+true                             
+cross-sens     0     4          1
+sensor        20     0          0
+Levene W=1.911 p=0.2043; F ratio=35.23 p(one-sided)=0.0022

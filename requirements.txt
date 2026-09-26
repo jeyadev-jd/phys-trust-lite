@@ -1,0 +1,14 @@
+numpy
+pandas
+scikit-learn
+joblib
+torch
+pyserial
+fastapi
+uvicorn[standard]
+websockets
+matplotlib
+tabulate
+# legacy Streamlit dashboard only
+streamlit
+plotly

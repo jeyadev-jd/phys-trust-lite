@@ -1,0 +1,5 @@
+Overnight watch 2026-09-26 06:42 for 7.0 h, 25165 rows
+cleanest 10 min: 06:58-07:08, ADC 91.4 +- 2.60, T 32.5, RH 67
+gates: {'burst_ok': True, 'stable': False, 'warmed': False}
+NOT calibrated: gates failed; old bundle kept
+last 30 min: ADC 181.0, burst std 0.89, T 34.5

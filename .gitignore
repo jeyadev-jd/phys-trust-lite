@@ -1,0 +1,25 @@
+# tooling / local assistant files
+.claude/
+CLAUDE.md
+graphify-out/
+
+# Python / Node
+__pycache__/
+*.pyc
+web/node_modules/
+
+# large or re-downloadable data (see README: Data sources)
+data/external/
+data/uci/*.zip
+
+# model backups (only the active calibration is versioned)
+models/*.joblib
+!models/bundle.joblib
+
+# bulky intermediate results (figures and tables are kept)
+results/**/*.pkl
+results/**/*.joblib
+results/**/*.csv
+!results/uci/ablation.csv
+!results/weather/stats.csv
+!results/prior_compare.csv
