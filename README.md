@@ -286,3 +286,15 @@ docs/                       math model, report, screenshots
     <td align="center"><a href="https://github.com/Naveenvaidani"><img src="https://github.com/Naveenvaidani.png" width="80" alt="Naveen Vaidani"><br><b>Naveen Vaidani</b></a><br><sub>@Naveenvaidani</sub></td>
   </tr>
 </table>
+
+---
+
+## Author
+
+**Jeyadev R** · AI/ML Engineer & Full-Stack Developer · Chennai, India
+
+- Portfolio: [jeyadev.dev](https://jeyadev.dev/projects/phys-trust-lite)
+- GitHub: [@jeyadev-jd](https://github.com/jeyadev-jd)
+- LinkedIn: [r-jeyadev](https://www.linkedin.com/in/r-jeyadev)
+
+If this project is useful to you, a ⭐ on the repo helps others find it.

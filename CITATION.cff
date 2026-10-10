@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "PHYS-TRUST Lite: Trust-Adaptive Physics-Informed Air Quality Sensing"
+abstract: "Air quality estimation on one low-cost Arduino node (MQ135 + DHT11). A Kalman filter fuses sensor physics, room mass-balance physics and an LSTM-ensemble prior, weighting each by a live trust score, with a 90% conformal uncertainty band and fault detection. Live React dashboard, local Gemma 3 explanations, 9% lower error than fixed-weight fusion."
+authors:
+  - family-names: "R"
+    given-names: "Jeyadev"
+    email: "jeyadev2006@gmail.com"
+    affiliation: "Sri Ramachandra Institute of Higher Education and Research"
+repository-code: "https://github.com/jeyadev-jd/phys-trust-lite"
+url: "https://jeyadev.dev/projects/phys-trust-lite"
+keywords:
+  - "Arduino"
+  - "PyTorch"
+  - "FastAPI"
+  - "React"
+  - "WebSocket"
+  - "Ollama"
+date-released: "2026-10-10"
