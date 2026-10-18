@@ -76,19 +76,7 @@ fused estimate holds.
 
 ## How it works
 
-```
- Arduino Uno (1 Hz, 10x oversampled)                      Python estimator                         Outputs
- ┌────────────────────────────┐    ┌──────────────────────────────────────────────────┐   ┌──────────────────────┐
- │ MQ135  → A1 (gas)          │    │ L0  signal: ADC → Rs, fault flags                 │   │ fused index + 90 %   │
- │ DHT11  → A0 (T, RH)        │───▶│ L1a sensor physics (power law, T/RH correction)   │──▶│ band                 │
- │ CSV over USB serial        │    │ L1b process physics (mass balance, envelope)      │   │ per-source trust     │
- └────────────────────────────┘    │ L2  5-LSTM deep ensemble prior + OOD              │   │ state + action       │
-                                   │ L3  trust estimator                               │   │ P(OOD) + cause       │
-                                   │ L4  EKF fusion, R = R0 / trust                    │   │ LLM explanation      │
-                                   │ L5  conformal uncertainty                         │   └──────────────────────┘
-                                   │ state machine → action, adaptive compute          │
-                                   └──────────────────────────────────────────────────┘
-```
+<p align="center"><img src="docs/system_architecture.svg" alt="PHYS-TRUST Lite system architecture"><br><em>System architecture: sensing node, signal model, learned components, trust and fusion, output and interface.</em></p>
 
 Full derivation: [docs/MATH_MODEL.md](docs/MATH_MODEL.md). Report: [docs/PHYS-TRUST_Lite_Report.pdf](docs/PHYS-TRUST_Lite_Report.pdf).
 
