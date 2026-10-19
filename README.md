@@ -88,29 +88,52 @@ Full derivation: [docs/MATH_MODEL.md](docs/MATH_MODEL.md). Report: [docs/PHYS-TR
 
 | Measure | Value | Against |
 |---|---|---|
-| 90 % band coverage, real node | **0.89** (target 0.90) | consensus curve, 26 Sep 2026 |
-| R², adaptive estimator | **0.62** | certified CO analyser, UCI Air Quality, 10 months |
-| 90 % band coverage, UCI | **0.91** | certified CO analyser |
-| Learned-prior skill | **0.41** | persistence, held-out node data |
-| Error vs fixed-weight fusion | **−9 %** (RMSE log 0.078 vs 0.085, p = 0.0008) | synthetic ground truth, 5 seeds |
+| 90 % band coverage, UCI | **0.91** (target 0.90) | certified CO analyser, 10-month test |
+| R², trust-adaptive fusion, UCI | **0.62** | certified CO analyser, 10-month test |
+| Error vs fixed-weight fusion | **−9 %** (RMSE log 0.0776 vs 0.0854, paired p = 0.0008) | synthetic ground truth, 5 seeds |
+| Learned-prior one-step skill | **0.616** (LSTM; MLP rejected at −12.9) | persistence, held-out data (report Table 5a) |
+| 90 % band coverage, real node, undisturbed | **0.70** with the LSTM prior (target 0.90) | reference-free consensus curve; provisional (≈ 5.5 h burn-in) |
 | Absolute ppm | not claimed | no reference instrument on this node |
+
+**UCI comparison (10-month test, scored against the certified CO analyser).** Trust-adaptive fusion beats
+fixed weights but not the best single channel, so its benefit here is calibrated uncertainty and fault
+handling, not lower point error.
+
+| Method | RMSE (log) | R² | 90 % coverage |
+|---|---|---|---|
+| Static formula, no T/RH (existing practice) | 0.448 | 0.65 | n/a |
+| Raw channel through the filter | 0.475 | 0.69 | 0.92 |
+| Fixed-weight fusion | 0.506 | 0.60 | 0.89 |
+| Trust-adaptive fusion | 0.493 | 0.62 | 0.91 |
+
+The learned prior was disabled on the UCI data: it passed the one-step test (skill 0.04) but failed the
+fused-level test. Sequence priors (LSTM, TCN, Transformer) improve one-step error by about 60 % over
+persistence but tie at the fusion level (fused log RMSE 0.0771 for all three).
+
+The UCI reference measures carbon monoxide, not CO₂, so it shows that the index tracks co-varying urban
+pollution; it does not validate CO₂-equivalent accuracy.
 
 Channel health and trust scores are **fault evidence, not accuracy**: 1.0 means "no evidence against this channel".
 
-### Fault detection (synthetic injection)
+### Fault detection (synthetic injection, 3 seeds)
 
-| Condition | Flagged as SENSOR_FAULT |
+| True condition | Time in SENSOR_FAULT |
 |---|---|
-| Swab / perfume spike | 97 % |
-| Stuck sensor | 94 % |
-| ×3 noise | 52 % |
+| Swab / perfume-like spike | 98 % |
+| Stuck sensor | 93 % |
+| ×3 noise | 41 % (alarm metric detected it in 1 of 5 seeds) |
 | Slow drift | not detectable within a day (see limits) |
+
+Sensor-fault alarm over 5 seeds: precision 0.86 ± 0.12, recall 0.73 ± 0.03, F1 0.785 ± 0.052; latency about
+1 s for spikes and 4 s for stuck values; all 20 of 20 sensor faults attributed to the sensor. On the real UCI
+data with injected faults, detection is weak (F1 0.14). Noise-type faults are poorly detected.
 
 ### Real hardware
 
-- **Perfume at 5–10 cm:** flagged at onset, both channels distrusted; the fused estimate held while the raw reading
-  rose by four orders of magnitude.
-- **Hot air (+8.5 °C / −18 %RH):** the datasheet T/RH correction removed only about 3 % of the shift.
+- **Perfume at 5–10 cm for 60 s:** flagged at onset, both sensor channels distrusted and attributed to the
+  sensor; the raw index rose to about 2.4 × 10⁶ while the fused estimate held near 871 and its band widened.
+- **Hot air (+8.5 °C / −18 %RH):** the datasheet T/RH correction removed only about 3 % of the shift; the fused
+  estimate moved by −0.024 because trust dropped (confounded by residual perfume).
 - **Wiring faults:** a floating analog pin (burst noise ≈ 107 counts) and loose contacts (instant 15–30 % steps)
   were detected as sensor faults and fixed.
 
@@ -124,14 +147,17 @@ Channel health and trust scores are **fault evidence, not accuracy**: 1.0 means 
 
 DHT11 vs outdoor weather over 26 h: temperature bias +2.3 °C (indoor node), humidity correlation r = 0.76.
 
-### Out-of-distribution rate on the real node
+### Out-of-distribution flagging
 
-| Model | Day | Unseen humid evening |
+| Data | Before redesign | After |
 |---|---|---|
-| Trained on this node only | 17 % | 90 % |
-| + DALTON India external data | **8 %** | **18 %** |
+| Synthetic clean, outside the T/RH swing | 5.0 % | 3.4 % |
+| Synthetic clean, all | 15 % | 10 % |
+| Real node, quiet half-hours | n/a | 0–2 % |
 
-Genuinely unusual inputs (85 % RH, 40 °C, cold-dry air, perfume-like spikes) are still flagged.
+On the real log the remaining out-of-distribution time falls on genuine events: warm-up after power-on (78 %
+of the first half-hour), the perfume and hot-air tests (26 %), and warm-up after a 7.5-hour power outage
+(51–96 %). Genuinely unusual inputs (85 % RH, 40 °C, cold-dry air, perfume-like spikes) are still flagged.
 
 ---
 
@@ -261,7 +287,13 @@ docs/                       math model, report, screenshots
 - The datasheet temperature/humidity correction is weak on this sensor.
 - Noise faults are detected less reliably than spikes and stuck readings.
 - No reference instrument on the node: accuracy is stated against a consensus curve and against UCI reference data,
-  not as absolute ppm.
+  not as absolute ppm. The MQ135 is not gas-selective.
+- On the UCI reference data, trust-adaptive fusion beats fixed weights but not the best single channel (R² 0.62
+  vs 0.69 raw); fault detection on those real data is weak (F1 0.14).
+- The learned prior improves one-step prediction but not fused accuracy, and is disabled automatically when
+  training data are scarce (as on UCI).
+- Real-node results are provisional: short burn-in (≈ 5.5 h), unmeasured load resistor, no verified outdoor
+  reference; DHT11 read failures reached 26 % in one hour. Drift tracking and ABC over several days are untested.
 
 ---
 
